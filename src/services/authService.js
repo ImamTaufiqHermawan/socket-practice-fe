@@ -1,20 +1,27 @@
 import API from './api';
 
 const AuthService = {
-  login: (data) => {
-    return API.post('/auth/login', data)
-      .then(({ data }) => {
-        API.defaults.headers['Authorization'] = `Bearer ${data.token}`;
-        return data
-      })
-      .catch(err => {
-        console.log('Auth service error', err);
-        throw err;
-      })
+  login: async function (data) {
+    try {
+      const response = await API.post('/auth/login', data);
+      API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+      return response;
+    } catch (err) {
+      console.log('Auth service error', err);
+      throw err;
+    }
   },
 
-  register: (data) => {
-
+  register: async function (data) {
+    try {
+      console.log(data)
+      const response = await API.post('/auth/register', data);
+      API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+      return response;
+    } catch (err) {
+      console.log('Auth service error', err);
+      throw err;
+    }
   },
 
   logout: () => {
