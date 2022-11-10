@@ -1,8 +1,5 @@
 import AuthService from "../../services/authService";
-export const LOGIN = 'LOGIN';
-export const REGISTER = 'REGISTER';
-export const LOGOUT = 'LOGOUT';
-export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+import { LOGIN, REGISTER, LOGOUT, UPDATE_PROFILE } from '../types/index';
 
 export const login = (params, history) => async function (dispatch) {
   try {
@@ -36,9 +33,9 @@ export const logout = (params, history) => async function (dispatch) {
   }
 }
 
-export const updateProfile = (params, history) => async function (dispatch) {
+export const updateProfile = (params) => async function (dispatch) {
   try {
-    const response = AuthService.updateProfile(params)
+    const response = await AuthService.updateProfile(params)
     dispatch({ type: UPDATE_PROFILE, payload: response.data })
   } catch (error) {
     console.log(error)

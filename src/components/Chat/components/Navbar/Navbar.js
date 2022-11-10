@@ -50,18 +50,17 @@ const Navbar = () => {
       email,
       gender,
       password,
-      avatar,
     }
 
     if (password.length > 0) form.password = password
 
-    const formData = new FormData()
+    // const formData = new FormData()
 
-    for (const key in form) {
-      formData.append(key, form[key])
-    }
+    // for (const key in form) {
+    //   formData.append(key, form[key])
+    // }
 
-    dispatch(updateProfile(formData)).then(() => setSHowProfileModal(false))
+    dispatch(updateProfile(form)).then(() => setSHowProfileModal(false))
   }
 
   return (
