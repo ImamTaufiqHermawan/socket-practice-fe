@@ -2,6 +2,7 @@ import AuthService from "../../services/authService";
 export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 export const login = (params, history) => async function (dispatch) {
   try {
@@ -29,6 +30,16 @@ export const logout = (params, history) => async function (dispatch) {
   try {
     AuthService.logout(params)
     dispatch({ type: LOGOUT })
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export const updateProfile = (params, history) => async function (dispatch) {
+  try {
+    const response = AuthService.updateProfile(params)
+    dispatch({ type: UPDATE_PROFILE, payload: response.data })
   } catch (error) {
     console.log(error)
     throw error

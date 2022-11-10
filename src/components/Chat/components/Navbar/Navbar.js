@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { logout } from '../../../../store/actions/auth';
 import Modal from '../../../Modal/Modal';
-
+import { updateProfile } from "../../../../store/actions/auth";
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -34,7 +34,6 @@ const Navbar = () => {
   }
 
   const handleGender = (e) => {
-    console.log(gender)
     setGender(e.target.value);
   }
 
@@ -54,13 +53,15 @@ const Navbar = () => {
       avatar,
     }
 
+    if (password.length > 0) form.password = password
+
     const formData = new FormData()
 
-    for(const key in form) {
+    for (const key in form) {
       formData.append(key, form[key])
     }
 
-    // dispatch(register())
+    dispatch(updateProfile(formData)).then(() => setSHowProfileModal(false))
   }
 
   return (
@@ -146,7 +147,7 @@ const Navbar = () => {
               </form>
             </Fragment>
             <Fragment key='footer'>
-              <button className="btn-success">Update</button>
+              <button className="btn-success" onClick={submitForm}>Update</button>
             </Fragment>
           </Modal>
         }

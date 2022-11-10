@@ -29,7 +29,22 @@ const AuthService = {
     API.defaults.headers['Authorization'] = '';
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-  }
+  },
+
+  updateProfile: async function (data) {
+    try {
+      const headers = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }
+      const response = await API.put('/users/update', data, headers);
+      localStorage.setItem('user', JSON.stringify(data));
+      return response;
+    } catch (err) {
+      console.log('Auth service error', err);
+      throw err;
+    }
+  },
+
 }
 
 const setHeadersAndStorage = ({ user, token }) => {
