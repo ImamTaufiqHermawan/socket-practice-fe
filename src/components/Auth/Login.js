@@ -38,7 +38,7 @@ const Login = () => {
             <h2>Welcome Back</h2>
 
             <form onSubmit={submitForm}>
-              <div className='input-field mb-2'>
+              <div className='input-field mb-1'>
                 <input
                   onChange={e => setEmail(e.target.value)}
                   value={email}

@@ -65,7 +65,7 @@ const Register = () => {
             <h2>Create an account</h2>
 
             <form onSubmit={submitForm}>
-              <div className='input-field mb-2'>
+              <div className='input-field mb-1'>
                 <input
                   onChange={handleFirstName}
                   value={firstName}
@@ -74,7 +74,7 @@ const Register = () => {
                   placeholder='First name' />
               </div>
 
-              <div className='input-field mb-2'>
+              <div className='input-field mb-1'>
                 <input
                   onChange={handleLastname}
                   value={lastName}
@@ -84,7 +84,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className='input-field mb-2'>
+              <div className='input-field mb-1'>
                 <input
                   onChange={handleEmail}
                   value={email}
@@ -94,7 +94,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className='input-field mb-2'>
+              <div className='input-field mb-1'>
                 <select
                   onChange={handleGender}
                   value={gender}
@@ -115,7 +115,7 @@ const Register = () => {
                 />
               </div>
 
-              <button>Login</button>
+              <button>Register</button>
             </form>
 
             <p>already have an account? <Link to='/login'>Login</Link></p>

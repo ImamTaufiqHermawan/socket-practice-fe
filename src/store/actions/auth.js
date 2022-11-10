@@ -4,8 +4,8 @@ export const REGISTER = 'REGISTER'
 
 export const login = (params, history) => async function (dispatch) {
   try {
-    const data = await AuthService.login(params)
-    dispatch({ type: LOGIN, payload: data })
+    const response = await AuthService.login(params)
+    dispatch({ type: LOGIN, payload: response.data })
     history('/')
   } catch (error) {
     console.log(error)
@@ -15,8 +15,8 @@ export const login = (params, history) => async function (dispatch) {
 
 export const register = (params, history) => async function (dispatch) {
   try {
-    const data = await AuthService.register(params)
-    dispatch({ type: REGISTER, payload: data })
+    const response = await AuthService.register(params)
+    dispatch({ type: REGISTER, payload: response.data })
     history('/')
   } catch (error) {
     console.log(error)
