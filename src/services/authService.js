@@ -5,6 +5,7 @@ const AuthService = {
     try {
       const response = await API.post('/auth/login', data);
       API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+      setHeadersAndStorage(response.data);
       return response;
     } catch (err) {
       console.log('Auth service error', err);
@@ -14,9 +15,9 @@ const AuthService = {
 
   register: async function (data) {
     try {
-      console.log(data)
       const response = await API.post('/auth/register', data);
       API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+      setHeadersAndStorage(response.data);
       return response;
     } catch (err) {
       console.log('Auth service error', err);
@@ -26,7 +27,15 @@ const AuthService = {
 
   logout: () => {
     API.defaults.headers['Authorization'] = '';
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   }
+}
+
+const setHeadersAndStorage = ({ user, token }) => {
+  API.defaults.headers['Authorization'] = `Bearer ${token}`;
+  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('token', token);
 }
 
 export default AuthService;
