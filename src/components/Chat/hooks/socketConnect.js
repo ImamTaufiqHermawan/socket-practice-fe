@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client';
 function useSocket(user, dispatch) {
 
   useEffect(() => {
-    const socket = socketIOClient.connect('http://127.0.0.1:3000', {
+    const socket = socketIOClient.connect('http://127.0.0.1:3001', {
       transports: ['websocket'],
       upgrade: false
     });
