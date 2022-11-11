@@ -1,5 +1,6 @@
 import chatService from '../../services/chatService';
 export const FETCH_CHATS = 'FETCH_CHATS';
+export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
 
 export const fetchChats = () => async function (dispatch) {
   try {
@@ -9,7 +10,7 @@ export const fetchChats = () => async function (dispatch) {
       chat.Users.forEach(user => {
         user.status = 'offline'
       })
-      chat.Message.reverse();
+      chat.Messages.reverse();
     })
 
     dispatch({ type: FETCH_CHATS, payload: response.data });
@@ -18,4 +19,8 @@ export const fetchChats = () => async function (dispatch) {
   } catch (error) {
     throw error
   }
+}
+
+export const setCurrentChat = (chat) => dispatch => {
+  dispatch({ type: SET_CURRENT_CHAT, payload: chat })
 }
