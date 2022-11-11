@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Navbar from './components/Navbar/Navbar';
 import { fetchChats } from '../../store/actions/chat';
 import FriendList from './components/FriendList/FriendList';
+import Messenger from './components/Messenger/Messenger';
 
 import './Chat.scss';
 
@@ -20,6 +21,7 @@ const Chat = () => {
       <Navbar />
       <div id='chat-wrap'>
         <FriendList />
+        <Messenger />
       </div>
     </div>
   );
