@@ -10,13 +10,13 @@ const ChatHeader = ({ chat }) => {
   const [showAddFriendModal, setshowAddFriendModal] = useState(false);
   const [showLeaveChatModal, setshowLeaveChatModal] = useState(false);
   const [showDeleteChatModal, setshowDeleteChatModal] = useState(false);
-  
+
   return (
     <Fragment>
       <div id='chatter'>
         {
           chat.Users.map(user => {
-            return <div className='chatter-info'>
+            return <div className='chatter-info' key={user.id}>
               <h3>{user.firstName} {user.lastName}</h3>
               <div className='chatter-status'>
                 <span className={`online-status ${userStatus(user)}`}></span>
