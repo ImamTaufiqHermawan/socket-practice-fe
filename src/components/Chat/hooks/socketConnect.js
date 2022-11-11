@@ -15,6 +15,18 @@ function useSocket(user, dispatch) {
       console.log('Event', user);
     });
 
+    socket.on('friends', (friends) => {
+      console.log('Friends', friends);
+    });
+
+    socket.on('online', (user) => {
+      console.log('Online', user);
+    });
+
+    socket.on('offline', (user) => {
+      console.log('Offline', user);
+    });
+
   }, [dispatch])
 };
 
