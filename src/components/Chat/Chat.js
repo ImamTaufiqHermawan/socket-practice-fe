@@ -1,22 +1,26 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from './components/Navbar/Navbar';
+import { fetchChats } from '../../store/actions/chat';
+import FriendList from './components/FriendList/FriendList';
 
 import './Chat.scss';
 
 const Chat = () => {
 
-  console.log(useSelector(state => state.authReducer.user))
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.authReducer.user);
 
-  const user = useSelector(state => state.authReducer.user)
-
-  // console.log(user)
+  useEffect(() => {
+    dispatch(fetchChats()).then(res => console.log(res)).catch(err => console.log(err))
+  }, [dispatch]);
 
   return (
-    <div>
+    <div id='chat-container'>
       <Navbar />
-      <h1>Chat Screen</h1>
-      <p>Welcome, {user.firstName}</p>
+      <div id='chat-wrap'>
+        <FriendList />
+      </div>
     </div>
   );
 }
