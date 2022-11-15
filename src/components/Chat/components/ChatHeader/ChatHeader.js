@@ -7,9 +7,6 @@ import './ChatHeader.scss';
 const ChatHeader = ({ chat }) => {
 
   const [showChatOptions, setShowChatOptions] = useState(false);
-  const [showAddFriendModal, setshowAddFriendModal] = useState(false);
-  const [showLeaveChatModal, setshowLeaveChatModal] = useState(false);
-  const [showDeleteChatModal, setshowDeleteChatModal] = useState(false);
 
   return (
     <Fragment>
