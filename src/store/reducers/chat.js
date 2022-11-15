@@ -1,4 +1,4 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE } from "../actions/chat";
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE } from "../actions/chat";
 
 const initialState = {
   chats: [],
@@ -15,11 +15,13 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         chats: payload
       }
+
     case SET_CURRENT_CHAT:
       return {
         ...state,
         currentChat: payload
       }
+
     case FRIENDS_ONLINE:
       const chatCopy = state.chats.map(chat => ({
         ...chat,
@@ -28,7 +30,7 @@ const chatReducer = (state = initialState, action) => {
             return {
               ...user,
               status: 'online'
-            };
+            }
           }
           return user;
         })
@@ -38,6 +40,75 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         chats: chatCopy
       }
+
+    case FRIEND_ONLINE: {
+      let currentChatCopy = { ...state.currentChat }
+      const chatsCopy = state.chats.map(chat => {
+        const Users = chat.Users.map(user => {
+          if (user.id === parseInt(payload.id)) {
+            return {
+              ...user,
+              status: 'online'
+            }
+          }
+
+          return user;
+        })
+
+        if (chat.id === currentChatCopy.id) {
+          currentChatCopy = {
+            ...currentChatCopy,
+            Users
+          }
+        }
+
+        return {
+          ...chat,
+          Users
+        }
+      })
+
+      return {
+        ...state,
+        chats: chatsCopy,
+        currentChat: currentChatCopy,
+      }
+    }
+
+    case FRIEND_OFFLINE: {
+      let currentChatCopy = { ...state.currentChat }
+      const chatsCopy = state.chats.map(chat => {
+        const Users = chat.Users.map(user => {
+          if (user.id === parseInt(payload.id)) {
+            return {
+              ...user,
+              status: 'offline'
+            }
+          }
+
+          return user;
+        })
+
+        if (chat.id === currentChatCopy.id) {
+          currentChatCopy = {
+            ...currentChatCopy,
+            Users
+          }
+        }
+
+        return {
+          ...chat,
+          Users
+        }
+      })
+
+      return {
+        ...state,
+        chats: chatsCopy,
+        currentChat: currentChatCopy,
+      }
+    }
+
     default: {
       return state
     }
