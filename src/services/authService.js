@@ -4,7 +4,6 @@ const AuthService = {
   login: async function (data) {
     try {
       const response = await API.post('/auth/login', data);
-      API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
       setHeadersAndStorage(response.data);
       return response;
     } catch (err) {
@@ -16,7 +15,6 @@ const AuthService = {
   register: async function (data) {
     try {
       const response = await API.post('/auth/register', data);
-      API.defaults.headers['Authorization'] = `Bearer ${response.token}`;
       setHeadersAndStorage(response.data);
       return response;
     } catch (err) {

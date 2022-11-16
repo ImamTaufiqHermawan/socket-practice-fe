@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import ChatService from '../../../../services/chatService';
-
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
+// import 'emoji-mart/css/emoji-mart.css';
 import './MessageInput.scss';
 
 
@@ -12,15 +14,32 @@ const MessageInput = ({ chat }) => {
   const socket = useSelector(state => state.chatReducer.socket);
 
   const fileUpload = useRef();
+  const msgInput = useRef();
 
   const [message, setMessage] = useState('');
   const [image, setImage] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
   const handleMessage = (e) => {
     const value = e.target.value;
     setMessage(value)
 
-    // notify other users that this is typing something
+    // notify other users that user is typing something
+    const receiver = {
+      chatId: chat.id,
+      fromUser: user,
+      toUserId: chat.Users.map(user => user.id)
+    }
+
+    if (value.length === 1) {
+      receiver.typing = true
+      socket.emit('typing', receiver)
+    }
+
+    if (value.length === 0) {
+      receiver.typing = false
+      socket.emit('typing', receiver)
+    }
   }
 
   const handleKeyDown = (e, imageUpload) => {
@@ -53,9 +72,20 @@ const MessageInput = ({ chat }) => {
 
     setMessage('')
     setImage('')
+    setShowEmojiPicker(false)
 
     // send message with socket
     socket.emit('message', msg);
+  }
+
+  const selectEmoji = emoji => {
+    const startPosition = msgInput.current.selectionStart
+    const endPosition = msgInput.current.selectionEnd
+    const emojiLength = msgInput.current.value
+    const value = msgInput.current.value
+    setMessage(value.substring(0, startPosition) + emoji.native + value.substring(endPosition, value.length))
+    msgInput.current.focus()
+    msgInput.current.selectionEnd = endPosition + emojiLength
   }
 
   return (
@@ -64,7 +94,7 @@ const MessageInput = ({ chat }) => {
         <div>
 
         </div>
-        
+
         <div id='image-upload'>
           {
             image.name ?
@@ -92,18 +122,33 @@ const MessageInput = ({ chat }) => {
       </div>
       <div id="message-input">
         <input
+          ref={msgInput}
+          value={message}
           type='text'
           placeholder="Message..."
           onChange={e => handleMessage(e)}
           onKeyDown={e => handleKeyDown(e, false)}
         />
         <FontAwesomeIcon
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
           icon={['fa', 'smile']}
           className='fa-icon'
         />
       </div>
 
       <input id='chat-image' ref={fileUpload} type='file' onChange={e => setImage(e.target.files[0])} />
+
+      {
+        showEmojiPicker
+          ? <Picker
+            data={data}
+            title='Pick your emoji...'
+            emoji='point_up'
+            style={{ position: 'absolute', bottom: '20px', right: '20px' }}
+            onEmojiSelect={selectEmoji}
+          />
+          : null
+      }
 
     </div>
   )
