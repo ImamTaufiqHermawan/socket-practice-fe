@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
-import { fetchChats, onlineFriends, onlineFriend, offlineFriend } from '../../../store/actions/chat';
+import { fetchChats, onlineFriends, onlineFriend, offlineFriend, setSocket, receivedMessage } from '../../../store/actions/chat';
 
 function useSocket(user, dispatch) {
   useEffect(() => {
@@ -11,6 +11,8 @@ function useSocket(user, dispatch) {
           transports: ['websocket'],
           upgrade: false
         });
+
+        dispatch(setSocket(socket))
 
         socket.emit('join', user);
 
@@ -29,6 +31,10 @@ function useSocket(user, dispatch) {
 
         socket.on('offline', (user) => {
           dispatch(offlineFriend(user));
+        })
+
+        socket.on('received', (message) => {
+          dispatch(receivedMessage(message, user.id));
         })
 
         console.log(res)

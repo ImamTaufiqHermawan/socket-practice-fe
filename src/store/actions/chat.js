@@ -4,11 +4,12 @@ export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
 export const FRIENDS_ONLINE = 'FRIENDS_ONLINE';
 export const FRIEND_ONLINE = 'FRIEND_ONLINE';
 export const FRIEND_OFFLINE = 'FRIENDS_OFFLINE';
+export const SET_SOCKET = 'SET_SOCKET';
+export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE';
 
 export const fetchChats = () => async function (dispatch) {
   try {
     const response = await chatService.fetchChats();
-    console.log(response)
     response.data.forEach(chat => {
       chat.Users.forEach(user => {
         user.status = 'offline'
@@ -38,4 +39,12 @@ export const onlineFriend = (friend) => dispatch => {
 
 export const offlineFriend = (friend) => dispatch => {
   dispatch({ type: FRIEND_OFFLINE, payload: friend })
+}
+
+export const setSocket = (socket) => dispatch => {
+  dispatch({ type: SET_SOCKET, payload: socket })
+}
+
+export const receivedMessage = (message, userId) => dispatch => {
+  dispatch({ type: RECEIVED_MESSAGE, payload: { message, userId } })
 }

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 import './MessageInput.scss';
-import { useSelector } from "react-redux";
+
 
 const MessageInput = ({ chat }) => {
 
   const user = useSelector(state => state.authReducer.user);
+  const socket = useSelector(state => state.chatReducer.socket);
 
   const [message, setMessage] = useState('');
   const [image, setImage] = useState('');
@@ -25,18 +27,20 @@ const MessageInput = ({ chat }) => {
   const sendMessage = (imageUpload) => {
 
     if (message.length < 1 && !imageUpload) return
+
     const msg = {
       type: imageUpload ? 'image' : 'text',
-      fromUserId: user.id,
+      fromUser: user,
       toUserId: chat.Users.map(user => user.id),
       chatId: chat.id,
-      message: imageUpload ? image: message
+      message: imageUpload ? imageUpload: message
     }
 
     setMessage('')
     setImage('')
 
     // send message with socket
+    socket.emit('message', msg);
   }
 
   return (
@@ -46,7 +50,7 @@ const MessageInput = ({ chat }) => {
           type='text'
           placeholder="Message..."
           onChange={e => handleMessage(e)}
-          onKeyDown={e => handleKeyDown(e)}
+          onKeyDown={e => handleKeyDown(e, false)}
         />
         <FontAwesomeIcon
           icon={['fa', 'smile']}
