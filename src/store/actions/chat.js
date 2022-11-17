@@ -51,5 +51,5 @@ export const receivedMessage = (message, userId) => dispatch => {
 }
 
 export const senderTyping = (sender) => dispatch => {
-  dispatch({ type: SENDER_TYPING, payload: { sender } })
+  dispatch({ type: SENDER_TYPING, payload: sender })
 }
