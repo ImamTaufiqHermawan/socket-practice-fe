@@ -8,7 +8,7 @@ const MessageBox = ({ chat }) => {
 
   const user = useSelector(state => state.authReducer.user);
   const scrollBottom = useSelector(state => state.chatReducer.scrollBottom);
-  const senderTyping = useSelector(state => state.chatReducer.senderTyping)
+  const senderTyping = useSelector(state => state.chatReducer.senderTyping);
 
   const msgBox = useRef();
 
@@ -37,9 +37,10 @@ const MessageBox = ({ chat }) => {
       }
       {
         senderTyping.typing && senderTyping.chatId === chat.id
-          ? <div className='message mt-5p'>
+          ?
+          <div className='message mt-5p'>
             <div className='other-person'>
-              <p className='m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName}...</p>
+              <p className='font-bold m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName} is typing.....</p>
             </div>
           </div>
           : null
