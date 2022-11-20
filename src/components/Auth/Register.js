@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import registerImage from '../../assets/images/register.svg';
 import { Link, useNavigate } from 'react-router-dom';
-import { isExpired } from 'react-jwt';
 
 import { useDispatch } from 'react-redux';
 import { register } from '../../store/actions/auth';
@@ -18,15 +17,6 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('male');
   const [password, setPassword] = useState('');
-
-  const token = localStorage.getItem('token');
-  const tokenExpired = isExpired(token);
-
-  useEffect(() => {
-    if (tokenExpired) {
-      history('/login');
-    }
-  }, [history, tokenExpired]);
 
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
