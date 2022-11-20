@@ -22,6 +22,19 @@ const chatService = {
         throw err
       })
   },
+
+  paginateMessages: async (id, page) => {
+    try {
+      const { data } = await API.get('/chats/messages', {
+        params: {
+          id, page
+        }
+      });
+      return data;
+    } catch (err) {
+      throw err;
+    }
+  },
 }
 
 export default chatService;
