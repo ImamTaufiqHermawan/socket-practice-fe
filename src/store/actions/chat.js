@@ -8,8 +8,9 @@ export const SET_SOCKET = 'SET_SOCKET';
 export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE';
 export const SENDER_TYPING = 'SENDER_TYPING';
 export const PAGINATE_MESSAGES = 'PAGINATE_MESSAGES';
-export const INCREMENT_SCROLL = 'INCREMENT_SCROLL'
-export const CREATE_CHAT = 'CREATE_CHAT'
+export const INCREMENT_SCROLL = 'INCREMENT_SCROLL';
+export const CREATE_CHAT = 'CREATE_CHAT';
+export const ADD_USER_TO_GROUP = 'ADD_USER_TO_GROUP';
 
 export const fetchChats = () => async function (dispatch) {
   try {
@@ -81,4 +82,8 @@ export const incrementScroll = () => dispatch => {
 
 export const createChat = (chat) => dispatch => {
   dispatch({ type: CREATE_CHAT, payload: chat })
+}
+
+export const addUserToGroup = (group) => dispatch => {
+  dispatch({ type: ADD_USER_TO_GROUP, payload: group })
 }
