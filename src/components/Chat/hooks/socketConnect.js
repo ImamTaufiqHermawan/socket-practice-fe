@@ -50,7 +50,7 @@ function useSocket(user, dispatch) {
           dispatch(senderTyping(sender))
         })
 
-        socket.on('typing', (chat) => {
+        socket.on('new-chat', (chat) => {
           dispatch(createChat(chat))
         })
 
