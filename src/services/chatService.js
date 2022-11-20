@@ -10,17 +10,16 @@ const chatService = {
     }
   },
 
-  uploadImage: (data) => {
+  uploadImage: async (data) => {
     const headers = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }
-    return API.post('/chats/upload-image', data, headers)
-      .then(({ data }) => {
-        return data.url
-      })
-      .catch(err => {
-        throw err
-      })
+    try {
+      const { data: data_1 } = await API.post('/chats/upload-image', data, headers);
+      return data_1.url;
+    } catch (err) {
+      throw err;
+    }
   },
 
   paginateMessages: async (id, page) => {
@@ -35,6 +34,21 @@ const chatService = {
       throw err;
     }
   },
+
+  searchUsers: (term) => {
+    return API.get('/users/search-users', {
+      params: {
+        term
+      }
+    })
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        throw err
+      })
+  },
+  
 }
 
 export default chatService;

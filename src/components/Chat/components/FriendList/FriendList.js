@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Friend from '../Friend/Friend';
 import { setCurrentChat } from "../../../../store/actions/chat";
 import Modal from '../../../Modal/Modal';
+import chatService from "../../../../services/chatService";
 
 import './FriendList.scss';
 
@@ -20,6 +21,8 @@ const FriendList = () => {
 
   const searchFriends = (e) => {
     // chat service
+    chatService.searchUsers(e.target.value)
+      .then(res => setSuggestions(res))
   }
 
   const addNewFriend = (id) => {
@@ -30,7 +33,7 @@ const FriendList = () => {
     <div id='friends' className="shadow-light">
       <div id='title'>
         <h3 className="m-0">Friends</h3>
-        <button>Add</button>
+        <button onClick={() => setShowFriendsModal(true)}>Add</button>
       </div>
 
       <hr />
